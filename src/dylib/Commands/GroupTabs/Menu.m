@@ -172,8 +172,16 @@ static void DPMenuAdded(NSMenu *menu, NSMenuItem *item) {
 
 // AppKit throws, and Dia aborts, when an item that already sits in another menu is added: Dia rebuilds its menus
 // from items it finds in existing ones, which after setup or a terms prompt can include ones already placed.
+// Move the item instead; Dia's own item classes can't be copied.
 static NSMenuItem *DPUnplaced(NSMenu *menu, NSMenuItem *item) {
-    return item.menu && item.menu != menu ? [item copy] : item;
+    NSMenu *old = item.menu;
+    if (old && old != menu) {
+        BOOL was = DPInserting;
+        DPInserting = YES;
+        [old removeItem:item];
+        DPInserting = was;
+    }
+    return item;
 }
 
 static void DPMenu_addItem(NSMenu *self, SEL _cmd, NSMenuItem *item) {
