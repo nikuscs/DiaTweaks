@@ -170,12 +170,20 @@ static void DPMenuAdded(NSMenu *menu, NSMenuItem *item) {
     if (DPIsNewGroupTitle(item.title) || DPHasGroupOrFollower(menu)) DPPlaceGroupItem(menu);
 }
 
+// AppKit throws, and Dia aborts, when an item that already sits in another menu is added: Dia rebuilds its menus
+// from items it finds in existing ones, which after setup or a terms prompt can include ones already placed.
+static NSMenuItem *DPUnplaced(NSMenu *menu, NSMenuItem *item) {
+    return item.menu && item.menu != menu ? [item copy] : item;
+}
+
 static void DPMenu_addItem(NSMenu *self, SEL _cmd, NSMenuItem *item) {
+    item = DPUnplaced(self, item);
     DPCallOriginal(DPMenu_addItem, self, item);
     if (!DPInserting) DPMenuAdded(self, item);
 }
 
 static void DPMenu_insertItem(NSMenu *self, SEL _cmd, NSMenuItem *item, NSInteger index) {
+    item = DPUnplaced(self, item);
     DPCallOriginal(DPMenu_insertItem, self, item, index);
     if (!DPInserting) DPMenuAdded(self, item);
 }
