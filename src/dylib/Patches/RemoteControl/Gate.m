@@ -53,8 +53,11 @@ static int DPAccept(int listener, struct sockaddr *addr, socklen_t *len) {
     BOOL paused = DPPausedFlag;
     os_unfair_lock_unlock(&DPLock);
     if (paused || !DPRemoteTrusted(client)) {
+        // A tool checking the port is open connects and hangs up at once, before Dia can see who it was: no need to ask.
+        char byte;
+        BOOL gone = !client.pid && recv(fd, &byte, 1, MSG_PEEK | MSG_DONTWAIT) == 0;
         close(fd);
-        if (!paused) dispatch_async(dispatch_get_main_queue(), ^{ DPRemoteAsk(client); });
+        if (!paused && !gone) dispatch_async(dispatch_get_main_queue(), ^{ DPRemoteAsk(client); });
         errno = EAGAIN;  // The engine waits for the next connection as if none had come.
         return -1;
     }

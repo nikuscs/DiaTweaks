@@ -56,7 +56,7 @@ void DPRemoteAsk(DPRemoteClient *client) {
     DPAsking = YES;
     NSAlert *alert = [NSAlert new];
     alert.alertStyle = NSAlertStyleWarning;
-    alert.messageText = [NSString stringWithFormat:@"Let %@ control Dia?", client.name];
+    alert.messageText = [NSString stringWithFormat:@"Let %@ control Dia?", client.pid ? client.name : @"an unknown app"];
     alert.informativeText = @"It could read and change any page, including sites you’re signed in to.";
     if (client.path) {
         NSTextField *where = [NSTextField wrappingLabelWithString:[NSString stringWithFormat:@"%@\nProcess %d", client.path, client.pid]];
