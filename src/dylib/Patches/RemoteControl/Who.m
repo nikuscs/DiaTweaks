@@ -107,7 +107,7 @@ static NSString *DPKnownName(NSString *identity, NSString *bundle) {
     NSArray<NSArray<NSString *> *> *known = @[
         @[ @"claude", @"Claude" ], @[ @"codex", @"Codex" ], @[ @"opencode", @"OpenCode" ], @[ @"gemini", @"Gemini" ], @[ @"agy", @"Gemini" ], @[ @"antigravity", @"Gemini" ],
         @[ @"cursor-agent", @"Cursor" ], @[ @"t3 code", @"T3 Code" ], @[ @"paseo", @"Paseo" ], @[ @"ardia", @"Ardia" ],
-        @[ @"cursor", @"Cursor" ], @[ @"conductor", @"Conductor" ], @[ @"orca", @"Orca" ], @[ @"amp", @"Amp" ],
+        @[ @"cursor", @"Cursor" ], @[ @"conductor", @"Conductor" ], @[ @"orca", @"Orca" ], @[ @"amp", @"Amp" ], @[ @"grok", @"Grok" ], @[ @"openbot", @"OpenBot" ],
     ];
     for (NSArray<NSString *> *pair in known)
         if ([name isEqual:pair[0]] || [app hasPrefix:pair[0]]) return pair[1];
