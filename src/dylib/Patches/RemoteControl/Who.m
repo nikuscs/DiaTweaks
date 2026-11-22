@@ -105,7 +105,7 @@ static NSString *DPIdentity(NSString *path, NSArray<NSString *> *args) {
 static NSString *DPKnownName(NSString *identity, NSString *bundle) {
     NSString *name = identity.lowercaseString, *app = bundle.lowercaseString ?: @"";
     NSArray<NSArray<NSString *> *> *known = @[
-        @[ @"claude", @"Claude" ], @[ @"codex", @"Codex" ], @[ @"opencode", @"OpenCode" ], @[ @"gemini", @"Gemini" ],
+        @[ @"claude", @"Claude" ], @[ @"codex", @"Codex" ], @[ @"opencode", @"OpenCode" ], @[ @"gemini", @"Gemini" ], @[ @"agy", @"Gemini" ], @[ @"antigravity", @"Gemini" ],
         @[ @"cursor-agent", @"Cursor" ], @[ @"t3 code", @"T3 Code" ], @[ @"paseo", @"Paseo" ], @[ @"ardia", @"Ardia" ],
         @[ @"cursor", @"Cursor" ], @[ @"conductor", @"Conductor" ], @[ @"orca", @"Orca" ], @[ @"amp", @"Amp" ],
     ];
